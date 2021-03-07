@@ -1,26 +1,51 @@
 package com.ibm.ABC_airlines.entity;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Fare {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@JsonIgnore
 	int id;
+
+	@Column(name = "business_class_fare", nullable = false)
+	int businessClassFare;
+
+	@Column(name = "economy_class_fare", nullable = false)
+	int economyClassFare;
+
+	@OneToOne(cascade = { CascadeType.ALL })
+	private Flight flight;
 	
-	@Column(name = "source", nullable = false)
-	String source;
-	
-	@Column(name = "destination", nullable = false)
-	String destination;
-	
-	@Column(name = "fare", nullable = false)
-	int fare;
+	public Fare() {
+		
+	}
+
+	public Fare(int id, int businessClassFare, int economyClassFare, Flight flight) {
+		super();
+		this.id = id;
+		this.businessClassFare = businessClassFare;
+		this.economyClassFare = economyClassFare;
+		this.flight= flight;
+	}
+
+	public Flight getFlight() {
+		return flight;
+	}
+
+	public void setFlight(Flight flight) {
+		this.flight = flight;
+	}
 
 	public int getId() {
 		return id;
@@ -30,30 +55,20 @@ public class Fare {
 		this.id = id;
 	}
 
-	public String getSource() {
-		return source;
+	public int getBusinessClassFare() {
+		return businessClassFare;
 	}
 
-	public void setSource(String source) {
-		this.source = source;
+	public void setBusinessClassFare(int businessClassFare) {
+		this.businessClassFare = businessClassFare;
 	}
 
-	public String getDestinaton() {
-		return destination;
+	public int getEconomyClassFare() {
+		return economyClassFare;
 	}
 
-	public void setDestinaton(String destinaton) {
-		this.destination = destinaton;
+	public void setEconomyClassFare(int economyClassFare) {
+		this.economyClassFare = economyClassFare;
 	}
-
-	public int getFare() {
-		return fare;
-	}
-
-	public void setFare(int fare) {
-		this.fare = fare;
-	}
-	
-	
 
 }
