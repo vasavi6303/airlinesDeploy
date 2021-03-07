@@ -1,6 +1,6 @@
 package com.ibm.ABC_airlines.repository;
 
-import java.util.Date;
+import java.sql.Date;
 
 import javax.transaction.Transactional;
 
