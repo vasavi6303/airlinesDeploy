@@ -88,5 +88,4 @@ public class Flight {
 		this.date = date;
 	}
 	
-	
 }

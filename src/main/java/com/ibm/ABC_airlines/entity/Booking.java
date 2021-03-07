@@ -14,9 +14,8 @@ import javax.persistence.OneToOne;
 
 import org.hibernate.annotations.CreationTimestamp;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.ibm.ABC_airlines.Common.Common.PreferredClass;
-
-
 
 @Entity
 public class Booking {
@@ -32,10 +31,11 @@ public class Booking {
 	@CreationTimestamp
 	private Date bookedDate;
 
-	@OneToOne(cascade = {CascadeType.ALL})
+	@OneToOne(cascade = { CascadeType.ALL })
 	private Passenger passenger;
 
-	@OneToOne(cascade = {CascadeType.ALL})
+	@JsonIgnore
+	@OneToOne(cascade = { CascadeType.ALL })
 	private Flight flight;
 
 	@Column(name = "fare")
@@ -44,9 +44,9 @@ public class Booking {
 	@Enumerated(EnumType.STRING)
 	@Column(name = "preferred_class")
 	private PreferredClass preferredClass;
-	
+
 	public Booking() {
-		
+
 	}
 
 	public Booking(Passenger passenger, Flight flight, Date onBoardingDate, int fare, PreferredClass preferredClass) {
@@ -112,8 +112,5 @@ public class Booking {
 	public void setPreferredClass(PreferredClass preferredClass) {
 		this.preferredClass = preferredClass;
 	}
-	
-	
-
 
 }
