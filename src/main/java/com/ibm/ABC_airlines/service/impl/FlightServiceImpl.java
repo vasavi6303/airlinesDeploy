@@ -17,9 +17,6 @@ public class FlightServiceImpl implements FlightService {
 	@Autowired
 	private FlightRepository flightRepo;
 
-	@Autowired
-	private FlightService fareService;
-
 	@Override
 	public Flight save(Flight f) {
 		return flightRepo.save(f);
@@ -53,12 +50,9 @@ public class FlightServiceImpl implements FlightService {
 
 	@Override
 	public Boolean checkSeatAvailability(Flight flight, PreferredClass preferredClass) {
-		if (preferredClass == PreferredClass.BUSINESSCLASS && flight.getAvailableBusinessClassSeats() <= 0)
-			return false;
-		else if (flight.getAvailableEconomyClassSeats() <= 0)
-			return false;
-		else
-			return true;
+		return !(preferredClass == PreferredClass.BUSINESSCLASS && flight.getAvailableBusinessClassSeats() <= 0
+				|| flight.getAvailableEconomyClassSeats() <= 0);
+
 	}
 
 	@Override

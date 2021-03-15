@@ -11,10 +11,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import com.ibm.ABC_airlines.entity.Flight;
 
-
-
 @SpringBootTest
-//@ExtendWith(MockitoExtension.class)
+
 public class FlightRepositoryTest {
 
 	@Autowired
@@ -31,25 +29,4 @@ public class FlightRepositoryTest {
 
 	}
 
-//	@Test
-//	@DisplayName("Test Flight not found for non existing id")
-//	public void testFlightSavedSuccesfully() {
-//
-//		Flight mockFlight = new Flight();
-//
-//		mockFlight.setDate(Date.valueOf("2021-05-10"));
-//		mockFlight.setDestination("kolkata");
-//		mockFlight.setSource("Chennai");
-//		mockFlight.setAvailableBusinessClassSeats(0);
-//		mockFlight.setAvailableEconomyClassSeats(0);
-//
-//		Flight savedFlight = repository.save(mockFlight);
-//
-//		assertNotNull(savedFlight, "Flight should be saved");
-//		assertNotNull(savedFlight.getId(), "Flight should have id after saving");
-//		assertEquals(mockFlight.getId(), savedFlight.getId());
-//
-//	}
-
 }
-

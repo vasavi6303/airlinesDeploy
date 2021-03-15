@@ -9,6 +9,6 @@ import com.ibm.ABC_airlines.entity.Passenger;
 @Transactional
 public interface PassengerRepository extends JpaRepository<Passenger, Integer> {
 
-	Passenger findTopByName(String name);
+	public Passenger findTopByName(String name);
 
 }
