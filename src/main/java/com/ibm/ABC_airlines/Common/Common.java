@@ -1,11 +1,11 @@
 package com.ibm.ABC_airlines.Common;
 
 public class Common {
-	public static enum PreferredClass {
+	public enum PreferredClass {
 		BUSINESSCLASS, ECONOMYCLASS
 	}
 
-	public static enum Gender {
+	public enum Gender {
 		MALE, FEMALE, OTHER
 	}
 }

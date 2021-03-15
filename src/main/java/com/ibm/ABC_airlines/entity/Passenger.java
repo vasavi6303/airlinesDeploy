@@ -8,12 +8,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import com.ibm.ABC_airlines.Common.Common.Gender;
+
 @Entity
 public class Passenger {
-
-	enum Gender {
-		male, female, other
-	};
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

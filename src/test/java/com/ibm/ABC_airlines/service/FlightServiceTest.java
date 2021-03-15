@@ -20,8 +20,6 @@ import com.ibm.ABC_airlines.entity.Flight;
 import com.ibm.ABC_airlines.repository.FlightRepository;
 import com.ibm.ABC_airlines.service.impl.FlightServiceImpl;
 
-
-
 @SpringBootTest
 public class FlightServiceTest {
 	@Autowired
@@ -29,7 +27,7 @@ public class FlightServiceTest {
 
 	@MockBean
 	private FlightRepository repository;
-	
+
 	@Test
 
 	public void testFlightbySourceDestinationAndDate() {
@@ -48,7 +46,7 @@ public class FlightServiceTest {
 				Date.valueOf("2021-04-07"));
 		assertNotNull(foundFlight);
 		assertSame("Goa", foundFlight.getDestination());
-		
+
 	}
 
 	@Test
@@ -97,7 +95,7 @@ public class FlightServiceTest {
 	public Boolean CheckSeat(PreferredClass preferredClass, String source, String destination, Date date) {
 
 		Flight fid = service.searchFlight(source, destination, date);
-		System.out.print(fid);
+
 		if (fid != null) {
 			return service.checkSeatAvailability(fid, preferredClass);
 		} else
@@ -118,6 +116,5 @@ public class FlightServiceTest {
 		// assertFalse(CheckSeat(PreferredClass.ECONOMYCLASS, 3));
 
 	}
-
 
 }
