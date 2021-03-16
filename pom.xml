@@ -12,6 +12,7 @@
 	<groupId>com.demo</groupId>
 	<artifactId>airlines</artifactId>
 	<version>1.0</version>
+	<packaging>war</packaging>
 	<name>airlines</name>
 	<description>Airlines Reservation System</description>
 	<properties>
