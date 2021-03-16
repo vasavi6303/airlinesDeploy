@@ -36,15 +36,15 @@ node {
         
 		
 		stage ('Build Docker Image') {
-            steps {
+        
                 sh 'mvn k8s:build k8s:resource'
-            }
+          
         }
 		
 		stage ('Kubernetes Deploy') {
-            steps {
+           
                 sh 'mvn k8s:deploy'
-            }
+       
         }
     }
 
