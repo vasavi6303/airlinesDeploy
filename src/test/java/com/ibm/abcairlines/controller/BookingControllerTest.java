@@ -42,7 +42,7 @@ public class BookingControllerTest extends AbcAirlinesApplicationTests {
 	public void testbookTicket() throws Exception {
 		BookingDto bookingDto = new BookingDto();
 		bookingDto.setDestination("Delhi");
-		bookingDto.setPreferredClass(PreferredClass.BUSINESSCLASS);
+		bookingDto.setPreferredClass(PreferredClass.ECONOMYCLASS);
 		bookingDto.setSource("Pune");
 		bookingDto.setDate(Date.valueOf("2021-04-07"));
 		bookingDto.setPassenger(getPassenger());
@@ -62,7 +62,7 @@ public class BookingControllerTest extends AbcAirlinesApplicationTests {
 		map.put("source", "Pune");
 		map.put("destination", "Delhi");
 		map.put("date", Date.valueOf("2021-04-07"));
-		map.put("preferredClass", PreferredClass.BUSINESSCLASS);
+		map.put("preferredClass", PreferredClass.ECONOMYCLASS);
 		return map;
 	}
 
