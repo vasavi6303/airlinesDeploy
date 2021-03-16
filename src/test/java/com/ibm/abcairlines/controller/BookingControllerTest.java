@@ -17,7 +17,6 @@ import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -41,10 +40,10 @@ public class BookingControllerTest extends AbcAirlinesApplicationTests {
 	@Test
 	public void testbookTicket() throws Exception {
 		BookingDto bookingDto = new BookingDto();
-		bookingDto.setDestination("Delhi");
+		bookingDto.setDestination("Chennai");
 		bookingDto.setPreferredClass(PreferredClass.ECONOMYCLASS);
 		bookingDto.setSource("Pune");
-		bookingDto.setDate(Date.valueOf("2021-04-07"));
+		bookingDto.setDate(Date.valueOf("2021-04-02"));
 		bookingDto.setPassenger(getPassenger());
 
 		doReturn(getBookingdetails()).when(bookingController).bookTicket(ArgumentMatchers.any());
@@ -52,7 +51,7 @@ public class BookingControllerTest extends AbcAirlinesApplicationTests {
 				.content(new ObjectMapper().writeValueAsString(bookingDto)))
 
 				.andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
-				.andExpect(jsonPath("$.destination", is("Delhi")));
+				.andExpect(jsonPath("$.destination", is("Chennai")));
 
 	}
 
@@ -60,8 +59,8 @@ public class BookingControllerTest extends AbcAirlinesApplicationTests {
 		Map<String, Object> map = new HashMap<>();
 		map.put("passenger", getPassenger());
 		map.put("source", "Pune");
-		map.put("destination", "Delhi");
-		map.put("date", Date.valueOf("2021-04-07"));
+		map.put("destination", "Chennai");
+		map.put("date", Date.valueOf("2021-04-02"));
 		map.put("preferredClass", PreferredClass.ECONOMYCLASS);
 		return map;
 	}
