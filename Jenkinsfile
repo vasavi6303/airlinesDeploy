@@ -1,7 +1,7 @@
 node {
    def mvnHome
    stage('Prepare') {
-      git url: 'https://github.com/vasavi6303/airlinesDeploy.git', branch: 'initial_release1'
+      git url: 'https://github.com/vasavi6303/airlinesDeploy.git', branch: 'develop'
       mvnHome = tool 'maven'
    }
    stage('Build') {
