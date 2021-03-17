@@ -23,7 +23,6 @@ import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilde
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ibm.abcairlines.AbcAirlinesApplicationTests;
 import com.ibm.abcairlines.entity.Flight;
 import com.ibm.abcairlines.service.FlightService;
@@ -37,17 +36,19 @@ public class FlightControllerTest extends AbcAirlinesApplicationTests {
 	@InjectMocks
 	FlightController flightController;
 
+	
 	private MockMvc mockMvc;
 
 	String source = "chennai";
 	String destination = "mumbai";
 	String date = "2021-03-06";
-
+	
 	@BeforeEach
 	public void setup() {
 		this.mockMvc = MockMvcBuilders.standaloneSetup(flightController).build();
 	}
-
+	
+	
 	@Test
 	public void testGetFlights() throws Exception {
 		when(flightService.getFlights()).thenReturn(getFlights());
@@ -57,7 +58,7 @@ public class FlightControllerTest extends AbcAirlinesApplicationTests {
 	}
 
 	@Test
-	public void testSearchFlight() throws Exception {
+	public void testSearchFlight() throws Exception { 
 		Map<String, String> map = new HashMap<>();
 		map.put("source", source);
 		map.put("destination", destination);
@@ -100,16 +101,6 @@ public class FlightControllerTest extends AbcAirlinesApplicationTests {
 		flight.setDestination(destination);
 		flight.setDate(Date.valueOf(date));
 		return flight;
-	}
-
-	public static String asJsonString(final Object obj) {
-		try {
-			final ObjectMapper mapper = new ObjectMapper();
-			final String jsonContent = mapper.writeValueAsString(obj);
-			return jsonContent;
-		} catch (Exception e) {
-			throw new RuntimeException(e);
-		}
 	}
 
 }

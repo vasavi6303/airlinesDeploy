@@ -12,8 +12,5 @@ public interface PassengerService {
 
 	public Passenger getPassengerByName(String name);
 
-	public List<Passenger> getCustomers();
-
-	public void deletePassengerById(int id);
-
+	public List<Passenger> getPassengers();
 }

@@ -30,14 +30,8 @@ public class PassengerServiceImpl implements PassengerService {
 	}
 
 	@Override
-	public List<Passenger> getCustomers() {
+	public List<Passenger> getPassengers() {
 		return passengerRepo.findAll();
-	}
-
-	@Override
-	public void deletePassengerById(int id) {
-		passengerRepo.deleteById(id);
-
 	}
 
 	@Override

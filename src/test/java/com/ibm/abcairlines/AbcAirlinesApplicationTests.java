@@ -3,17 +3,12 @@ package com.ibm.abcairlines;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
-import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @SpringBootTest
 public class AbcAirlinesApplicationTests {
-
-	@Test
-	void contextLoads() {
-	}
 
 	public static String asJsonString(final Object obj) {
 		try {

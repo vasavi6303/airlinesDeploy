@@ -50,7 +50,7 @@ public class BookingController {
 
 		Flight flight = flightService.searchFlight(source, destination, date);
 		if (flight == null) {
-			map.put("Ërror", "No flight found for the selected cities");
+			map.put("Error", "No flight found for the selected cities");
 			return map;
 		}
 
@@ -70,6 +70,7 @@ public class BookingController {
 		map.put("source", source);
 		map.put("destination", destination);
 		map.put("Preferred Class", preferredClass);
+		map.put("date", date+"");
 		map.put("fare", booking.getFare());
 
 		return map;

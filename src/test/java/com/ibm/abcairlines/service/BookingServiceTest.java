@@ -42,5 +42,7 @@ public class BookingServiceTest {
 		Booking booking = bookingService.getBookingById(1);
 		assertNull(booking);
 	}
+	
+	
 
 }
