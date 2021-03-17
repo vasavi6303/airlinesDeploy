@@ -8,7 +8,7 @@ spec:
   #type: NodePort
   ports:
     - port: 3306
-      #nodePort: 31000
+      #nodePort: 31711
   selector:
     app: mysql
 ---
@@ -92,9 +92,9 @@ kind: ConfigMap
 metadata:
   name: mysql-config
 data:
-  MYSQL_DATABASE: petdb
-  MYSQL_DATABASE_URL: jdbc:mysql://mysql/devops
+  MYSQL_DATABASE: airlines
+  MYSQL_DATABASE_URL: jdbc:mysql://mysql/airlines
   initdb.sql: |
-    use devops;
+    use airlines;
     CREATE TABLE flight(id int, business_class_count int,economy_class_count int,date date,destination varchar(25),source varchar(25));
     INSERT INTO flight (business_class_count,economy_class_count,date,destination,source,id) values(30,30,20210402,"Chennai","Pune",1);
