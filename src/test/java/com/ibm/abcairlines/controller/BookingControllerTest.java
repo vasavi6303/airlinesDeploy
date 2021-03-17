@@ -13,6 +13,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.hamcrest.Matchers;
@@ -41,93 +42,97 @@ import com.ibm.abcairlines.service.FlightService;
 
 @ExtendWith(MockitoExtension.class)
 public class BookingControllerTest extends AbcAirlinesApplicationTests {
-	
+
 	@InjectMocks
 	BookingController bookingController;
-	
+
 	@Mock
 	FlightService flightService;
-	
+
 	@Mock
 	BookingService bookingService;
-	
+
 	@Mock
 	FareService fareService;
 
-	private MockMvc mockMvc; 
-	
+	private MockMvc mockMvc;
+
 	String source = "chennai";
 	String destination = "mumbai";
 	String dateString = "2021-03-18";
-	
+
 	@BeforeEach
 	public void setup() {
 		this.mockMvc = MockMvcBuilders.standaloneSetup(bookingController).build();
 	}
-	
+
 	@Test
 	public void testbookTicket() throws Exception {
-		
+
 		BookingDto bookingDto = getBookingDto();
 		Flight flight = getFlight();
 		when(flightService.searchFlight(anyString(), anyString(), any(Date.class))).thenReturn(flight);
 		when(flightService.checkSeatAvailability(flight, bookingDto.getPreferredClass())).thenReturn(Boolean.TRUE);
 		Fare fare = getFare();
 		when(fareService.getFareByFlightId(anyInt())).thenReturn(fare);
-		when(bookingService.confirmBooking(any(Passenger.class), any(Flight.class), any(Date.class), any(PreferredClass.class), any(Fare.class))).thenReturn(getBooking());
-		
-		mockMvc.perform(post("/bookTicket").contentType(MediaType.APPLICATION_JSON_VALUE)
-				.content(asJsonString(bookingDto)))
+		when(bookingService.confirmBooking(any(Passenger.class), any(Flight.class), any(Date.class),
+				any(PreferredClass.class), any(Fare.class))).thenReturn(getBooking());
+
+		mockMvc.perform(
+				post("/bookTicket").contentType(MediaType.APPLICATION_JSON_VALUE).content(asJsonString(bookingDto)))
 				.andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
 				.andExpect(jsonPath("$.source", Matchers.equalTo(source)))
 				.andExpect(jsonPath("$.date", Matchers.equalTo(dateString)));
 	}
-	
+
 	@Test
 	public void testbookTicket_noFlightFound() throws Exception {
 		BookingDto bookingDto = getBookingDto();
-		mockMvc.perform(post("/bookTicket").contentType(MediaType.APPLICATION_JSON_VALUE)
-				.content(asJsonString(bookingDto)))
+		mockMvc.perform(
+				post("/bookTicket").contentType(MediaType.APPLICATION_JSON_VALUE).content(asJsonString(bookingDto)))
 				.andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
 				.andExpect(jsonPath("$.Error", Matchers.equalTo("No flight found for the selected cities")));
 	}
-	
+
 	@Test
 	public void testbookTicket_noSeatsAvailable() throws Exception {
 		BookingDto bookingDto = getBookingDto();
 		Flight flight = getFlight();
 		when(flightService.searchFlight(anyString(), anyString(), any(Date.class))).thenReturn(flight);
 		when(flightService.checkSeatAvailability(flight, bookingDto.getPreferredClass())).thenReturn(Boolean.FALSE);
-		mockMvc.perform(post("/bookTicket").contentType(MediaType.APPLICATION_JSON_VALUE)
-				.content(asJsonString(bookingDto)))
+		mockMvc.perform(
+				post("/bookTicket").contentType(MediaType.APPLICATION_JSON_VALUE).content(asJsonString(bookingDto)))
 				.andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
-				.andExpect(jsonPath("$.Sorry!", Matchers.equalTo("No " + bookingDto.getPreferredClass().toString() + " seats available")));
+				.andExpect(jsonPath("$.Sorry!",
+						Matchers.equalTo("No " + bookingDto.getPreferredClass().toString() + " seats available")));
 	}
-	
-	
+
 	@Test
 	public void testGetTicket_noBookingFoundForGivenId() throws Exception {
 		int id = 1;
-		MvcResult result = mockMvc.perform(get("/getTicket").param("id", id+"")).andExpect(status().isOk()).andReturn();
-		assertEquals("<h1>Welcome to ABC Airlines </h1> <h2>No booking found with the id:" + id + " </h2>", result.getResponse().getContentAsString());
+		MvcResult result = mockMvc.perform(get("/getTicket").param("id", id + "")).andExpect(status().isOk())
+				.andReturn();
+		assertEquals("<h1>Welcome to ABC Airlines </h1> <h2>No booking found with the id:" + id + " </h2>",
+				result.getResponse().getContentAsString());
 	}
-	
+
 	@Test
 	public void testGetTicket() throws Exception {
 		int id = 1;
 		when(bookingService.getBookingById(id)).thenReturn(getBooking());
-		MvcResult result = mockMvc.perform(get("/getTicket").param("id", id+"")).andExpect(status().isOk()).andReturn();
+		MvcResult result = mockMvc.perform(get("/getTicket").param("id", id + "")).andExpect(status().isOk())
+				.andReturn();
 		assertTrue(result.getResponse().getContentAsString().contains("<h1>Welcome to ABC Airlines </h1> "));
 		assertTrue(result.getResponse().getContentAsString().contains(getPassenger().getName()));
 	}
-	
+
 	@Test
 	public void testGetAllBookings() throws Exception {
-		List<Booking> bookings = List.of(getBooking());
+		List<Booking> bookings = new ArrayList<>();
+		bookings.add(getBooking());
 		when(bookingService.getBookings()).thenReturn(bookings);
-		mockMvc.perform(get("/all-bookings")).andExpect(status().isOk())
-		.andExpect(jsonPath("$", Matchers.hasSize(1)))
-		.andExpect(jsonPath("$[0].id", Matchers.equalTo(1)));
+		mockMvc.perform(get("/all-bookings")).andExpect(status().isOk()).andExpect(jsonPath("$", Matchers.hasSize(1)))
+				.andExpect(jsonPath("$[0].id", Matchers.equalTo(1)));
 	}
 
 	private Booking getBooking() {
@@ -145,7 +150,7 @@ public class BookingControllerTest extends AbcAirlinesApplicationTests {
 		bookingDto.setDestination(destination);
 		bookingDto.setPreferredClass(PreferredClass.ECONOMYCLASS);
 		bookingDto.setSource(source);
-		bookingDto.setDate(Date.valueOf(dateString ));
+		bookingDto.setDate(Date.valueOf(dateString));
 		bookingDto.setPassenger(getPassenger());
 		return bookingDto;
 	}
@@ -158,7 +163,7 @@ public class BookingControllerTest extends AbcAirlinesApplicationTests {
 		passenger.setGender(Gender.FEMALE);
 		return passenger;
 	}
-	
+
 	private Flight getFlight() {
 		Flight flight = new Flight();
 		flight.setId(101);
@@ -167,7 +172,7 @@ public class BookingControllerTest extends AbcAirlinesApplicationTests {
 		flight.setDate(Date.valueOf(dateString));
 		return flight;
 	}
-	
+
 	private Fare getFare() {
 		Fare fare = new Fare();
 		fare.setFlight(getFlight());
